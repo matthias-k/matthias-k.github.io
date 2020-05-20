@@ -13319,14 +13319,14 @@ This calculation incorporates uncertainty about the total number of infected peo
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Our-Model:">Our Model:<a class="anchor-link" href="#Our-Model:">&#182;</a></h1><p>In a first step, we concentrate on estimating the infection fatality rate (IFR) in Gangelt.  In a second step,  we will show how one can use the IFR (along with the properly quantified uncertainty) to  extrapolate to infection-counts in Germany, and how big the resulting error bars would be. We emphasize that both of the estimation procedures will depend on the modelling assumptions, which we will explore below.</p>
 <p>We do not attempt to provide an estimate of the infection rate (IR) in Gangelt, but rather directly take the IR-estimate of <a href="https://www.medrxiv.org/content/10.1101/2020.05.04.20090076v1">Streeck et al 2020</a>. See <a href="https://statmodeling.stat.columbia.edu/2020/05/01/simple-bayesian-analysis-inference-of-coronavirus-infection-rate-from-the-stanford-study-in-santa-clara-county/">this post</a> for a Bayesian analysis of an infection rate of the Santa-Clara study. In Streeck et al, the infection rate is estimated as 0.1553 with 95%-confidence intervals (0.1231, 0.1896). To preserve this uncertainty, we assume the infection rate to follow a Beta distribution with parameters chosen such that the distribution has the same mean and variance as the IR estimate from Streeck et al.</p>
-<p>We then infer a posterior over the infection fatality rate as follows: given a sample from the IR distribution specified above, the number of infected individuals in Gangelt is  modelled as binomially distributed depending on the infection rate and the (fixed) number of individuals in Gangelt. Given the number of infected individuals, the number of fatalities is modelled as bionomially distributed depending on the infection fatality rate and the number of infections with a weak beta prior on the infection fatality rate. With this model, we compute the posterior over the infection fatality rate using Bayesian inference. The posterior distribution will then capture our beliefs about which IFR are plausible under both the observed data and our prior assumptions.</p>
+<p>We then infer a posterior over the infection fatality rate as follows: given a sample from the IR distribution specified above, the number of infected individuals in Gangelt is modelled as binomially distributed depending on the infection rate and the (fixed) number of individuals in Gangelt. Given the number of infected individuals, the number of fatalities is modelled as binomially distributed depending on the infection fatality rate and the number of infections with a weak beta prior on the infection fatality rate. With this model, we compute the posterior over the infection fatality rate using Bayesian inference. The posterior distribution will then capture our beliefs about which IFR are plausible under both the observed data and our prior assumptions.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
@@ -13795,7 +13795,7 @@ This calculation incorporates uncertainty about the total number of infected peo
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Extrapolating-to-infection-counts-in-Germany">Extrapolating to infection counts in Germany<a class="anchor-link" href="#Extrapolating-to-infection-counts-in-Germany">&#182;</a></h2><p>We next use the knowledge of the range of values of the IFR in Gangelt to try to estimate the infection count in Germany. Doing this, we assume that the IFR in Germany is the same as in Gangelt, and one furthermore we assume that the number of fatalities with Covid-19 is accurately recorded. In this case, one can infer the infection that would be consistent with these two quantities. Indeed, for a known IFR and fatality-count (and assuming that fatalities are statistically independent), the total infection count is given by a Negative Binomial distribution (see below)-- we can thus estimate the histogram of infecton counts in Germany by averaging samples from a Negative Binomial distribution over the uncertainty in the IFR:</p>
+<h2 id="Extrapolating-to-infection-counts-in-Germany">Extrapolating to infection counts in Germany<a class="anchor-link" href="#Extrapolating-to-infection-counts-in-Germany">&#182;</a></h2><p>We next use the knowledge of the range of values of the IFR in Gangelt to try to estimate the infection count in Germany. Doing this, we assume that the IFR in Germany is the same as in Gangelt, and furthermore we assume that the number of fatalities with Covid-19 is accurately recorded. In this case, one can infer the infection count that would be consistent with these two quantities. Indeed, for a known IFR and fatality-count (and assuming that fatalities are statistically independent), the total infection count is given by a Negative Binomial distribution (see below)-- we can thus estimate the histogram of infecton counts in Germany by averaging samples from a Negative Binomial distribution over the uncertainty in the IFR:</p>
 
 </div>
 </div>
@@ -14097,14 +14097,6 @@ $$ \lambda \sim \mbox{Beta}(\alpha_\lambda,\beta_\lambda).$$
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Changes in fatality-count would substantially change extrapolated infection count for Germany: it increases from 2.07 million to 2.47 million (6 instead of 7 fatalities) or decreases to 1.79 million (8 instead of 7 fatalities).</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="using-new-number-of-fatalities-in-Germany-and-in-Gangelt-(8-or-9?).">using new number of fatalities in Germany and in Gangelt (8 or 9?).<a class="anchor-link" href="#using-new-number-of-fatalities-in-Germany-and-in-Gangelt-(8-or-9?).">&#182;</a></h2><p>TODO</p>
 
 </div>
 </div>
